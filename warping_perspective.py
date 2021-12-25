@@ -1,16 +1,57 @@
-# ======= imports 
+#%%
+# ======= imports
 from random import randrange
 import matplotlib.pyplot as plt
 import numpy as np
 import glob
 import cv2
+import utility_functions as util
 
+#%%
 # ======= constants
+figsize = (10,10)
 pass
-
 # === template image keypoint and descriptors
-pass
+template_img_rgb ,template_img_gray = util.import_frame('frame188.jpg')
+frame_rgb,frame_gray = util.import_frame('frame107.jpg')
 
+feature_extractor = cv2.SIFT_create()
+
+kp_template,desc_t = feature_extractor.detectAndCompute(template_img_gray,None)
+kp_frame,desc_f = feature_extractor.detectAndCompute(frame_gray,None)
+
+test = cv2.drawKeypoints(template_img_rgb, kp_template, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+util.show_image(test,figsize)
+#%%
+bf = cv2.BFMatcher()
+matches = bf.knnMatch(desc_t, desc_f, k=2)
+
+# Apply ratio test
+good_and_second_good_match_list = []
+for m in matches:
+    if m[0].distance/m[1].distance < 0.5:
+        good_and_second_good_match_list.append(m)
+good_match_arr = np.asarray(good_and_second_good_match_list)[:,0]
+
+# show only 30 matches
+im_matches = cv2.drawMatchesKnn(template_img_rgb, kp_template, frame_rgb, kp_frame,
+                                good_and_second_good_match_list[0:30], None, flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+
+util.show_image(im_matches,figsize=(20,20))
+
+
+#%%
+
+good_kp_l = np.array([kp_template[m.queryIdx].pt for m in good_match_arr])
+good_kp_r = np.array([kp_frame[m.trainIdx].pt for m in good_match_arr])
+H, masked = cv2.findHomography(good_kp_r, good_kp_l, cv2.RANSAC, 5.0)
+
+
+rgb_r_warped = cv2.warpPerspective(frame_rgb, H, (template_img_rgb.shape[1] + frame_rgb.shape[1], template_img_rgb.shape[0]))
+rgb_r_warped[0:template_img_rgb.shape[0], 0:template_img_rgb.shape[1]] = template_img_rgb
+
+util.show_image(rgb_r_warped,figsize)
+#%%
 # ===== video input, output and metadata
 def runVideo():
     vidcap = cv2.VideoCapture('Richard_Szeliski.mp4')
