@@ -29,7 +29,7 @@ def runVideo():
     # util.show_image(cropped_mask,(10,10))
     cntr=0
     frame_list=[]
-    path = 'C:/Users/idano/Documents/HomeWork/3rd semester/computer vision/Line_Detection_Proj/frames_new'
+    path = ''
     # frame = util.import_frame("frame827.jpg")
     prev_l = None
     prev_r = None
