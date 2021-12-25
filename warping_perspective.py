@@ -12,15 +12,15 @@ import utility_functions as util
 figsize = (10,10)
 pass
 # === template image keypoint and descriptors
-template_img_rgb ,template_img_gray = util.import_frame('frame188.jpg')
-frame_rgb,frame_gray = util.import_frame('frame280.jpg')
+frame_rgb ,frame_gray = util.import_frame('frame233.jpg')
+t_rgb,t_gray = util.import_frame('template.jpg')
 
 feature_extractor = cv2.SIFT_create()
 
-kp_template,desc_t = feature_extractor.detectAndCompute(template_img_gray,None)
-kp_frame,desc_f = feature_extractor.detectAndCompute(frame_gray,None)
+kp_template,desc_t = feature_extractor.detectAndCompute(frame_gray,None)
+kp_frame,desc_f = feature_extractor.detectAndCompute(t_gray,None)
 
-test = cv2.drawKeypoints(template_img_rgb, kp_template, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+test = cv2.drawKeypoints(frame_rgb, kp_template, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 util.show_image(test,figsize)
 #%%
 bf = cv2.BFMatcher()
@@ -34,7 +34,7 @@ for m in matches:
 good_match_arr = np.asarray(good_and_second_good_match_list)[:,0]
 
 # show only 30 matches
-im_matches = cv2.drawMatchesKnn(template_img_rgb, kp_template, frame_rgb, kp_frame,
+im_matches = cv2.drawMatchesKnn(frame_rgb, kp_template, t_rgb, kp_frame,
                                 good_and_second_good_match_list[0:30], None, flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
 
 util.show_image(im_matches,figsize=(20,20))
@@ -47,10 +47,10 @@ good_kp_r = np.array([kp_frame[m.trainIdx].pt for m in good_match_arr])
 H, masked = cv2.findHomography(good_kp_r, good_kp_l, cv2.RANSAC, 5.0)
 
 
-rgb_r_warped = cv2.warpPerspective(frame_rgb, H, (template_img_rgb.shape[1] + frame_rgb.shape[1], template_img_rgb.shape[0]))
-rgb_r_warped[0:template_img_rgb.shape[0], 0:template_img_rgb.shape[1]] = template_img_rgb
+rgb_r_warped = cv2.warpPerspective(t_rgb, H, (frame_rgb.shape[1] + t_rgb.shape[1], frame_rgb.shape[0]))
+rgb_r_warped[0:frame_rgb.shape[0], 0:frame_rgb.shape[1]] = frame_rgb
 
-util.show_image(rgb_r_warped,figsize)
+util.show_image(rgb_r_warped,figsize= (20,20))
 #%%
 # ===== video input, output and metadata
 def runVideo():
