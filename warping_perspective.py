@@ -13,7 +13,7 @@ figsize = (10,10)
 pass
 # === template image keypoint and descriptors
 template_img_rgb ,template_img_gray = util.import_frame('frame188.jpg')
-frame_rgb,frame_gray = util.import_frame('frame107.jpg')
+frame_rgb,frame_gray = util.import_frame('frame280.jpg')
 
 feature_extractor = cv2.SIFT_create()
 
