@@ -50,3 +50,17 @@ while True:
 
 # ======== end all
 pass
+
+
+
+    # finds corners in the warped image
+    # #%%
+    # mask = mask.astype(np.float32)
+# mask /= 255
+# # mask = cv2.cvtColor(mask,cv2.COLOR_RGB2GRAY)
+# corners = cv2.goodFeaturesToTrack(mask, 4, 0.1, 50)
+
+# corners = corners.astype(np.int32)
+# for corner in corners:
+#     x,y = corner.ravel()
+#     cv2.circle(rgb_r_warped,(x,y),30,(36,255,12),-1)

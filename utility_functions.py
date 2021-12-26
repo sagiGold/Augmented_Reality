@@ -11,7 +11,7 @@ def import_frame(image_dir):
 
 def show_image(image,figsize):
     plt.figure(figsize=figsize)
-    plt.imshow(image)
+    plt.imshow(image,cmap="gray")
     plt.show()
 
 
