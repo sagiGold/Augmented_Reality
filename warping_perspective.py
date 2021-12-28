@@ -15,21 +15,20 @@ pass
 t_rgb,t_gray = util.import_frame('template.jpg')
 cover_im_rgb,cover_im_gray = util.import_frame('Pickle_Rick.jpg')
 
-
+feature_extractor = cv2.SIFT_create()
+bf = cv2.BFMatcher()
 
 def prossesSingleFrame(frame_rgb,frame_gray):
 
     # frame_rgb ,frame_gray = util.import_frame('frame183.jpg')
-    feature_extractor = cv2.SIFT_create()
 
-    kp_template,desc_t = feature_extractor.detectAndCompute(frame_gray,None)
-    kp_frame,desc_f = feature_extractor.detectAndCompute(t_gray,None)
+    frame_kp,desc_f = feature_extractor.detectAndCompute(frame_gray,None)
+    template_kp,desc_t = feature_extractor.detectAndCompute(t_gray,None)
 
-    test = cv2.drawKeypoints(frame_rgb, kp_template, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    # test = cv2.drawKeypoints(frame_rgb, frame_kp, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
     # util.show_image(test,figsize)
     #%%
-    bf = cv2.BFMatcher()
-    matches = bf.knnMatch(desc_t, desc_f, k=2)
+    matches = bf.knnMatch(desc_f, desc_t, k=2)
 
     # Apply ratio test
     good_and_second_good_match_list = []
@@ -39,13 +38,13 @@ def prossesSingleFrame(frame_rgb,frame_gray):
     good_match_arr = np.asarray(good_and_second_good_match_list)[:,0]
 
     # show only 30 matches
-    im_matches = cv2.drawMatchesKnn(frame_rgb, kp_template, t_rgb, kp_frame,
-                                    good_and_second_good_match_list[0:30], None, flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+    # im_matches = cv2.drawMatchesKnn(frame_rgb, frame_kp, t_rgb, template_kp,
+                                    # good_and_second_good_match_list[0:30], None, flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
 
     #%%
     #finds the homogriphic matrix
-    good_kp_l = np.array([kp_template[m.queryIdx].pt for m in good_match_arr])
-    good_kp_r = np.array([kp_frame[m.trainIdx].pt for m in good_match_arr])
+    good_kp_l = np.array([frame_kp[m.queryIdx].pt for m in good_match_arr])
+    good_kp_r = np.array([template_kp[m.trainIdx].pt for m in good_match_arr])
     H, masked = cv2.findHomography(good_kp_r, good_kp_l, cv2.RANSAC, 5.0)
 
     #lays the cover image
@@ -53,9 +52,9 @@ def prossesSingleFrame(frame_rgb,frame_gray):
     # util.show_image(rgb_r_warped,figsize= (20,20))
 
     # covered_im = rgb_r_warped.copy()
-    gray = cv2.cvtColor(rgb_r_warped,cv2.COLOR_RGB2GRAY)
+    warped_gray = cv2.cvtColor(rgb_r_warped,cv2.COLOR_RGB2GRAY)
     mask = rgb_r_warped
-    t,mask = cv2.threshold(gray,1,255,cv2.THRESH_BINARY)
+    t,mask = cv2.threshold(warped_gray,1,255,cv2.THRESH_BINARY)
     (contours, hierarchy) = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     cv2.drawContours(mask, contours, -1, color=(255, 255, 255), thickness=cv2.FILLED)
     # util.show_image(mask,(20,20))
@@ -96,5 +95,8 @@ def runVideo():
         print('progress:',cntr,'/451',end='\r')
         cntr+=1
 
-runVideo();
+# runVideo();
 
+frame_rgb,frame_gray = util.import_frame('frame199.jpg')
+
+util.show_image(prossesSingleFrame(frame_rgb,frame_gray),(10,10))
