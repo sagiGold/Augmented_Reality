@@ -7,6 +7,7 @@ import glob
 import cv2
 import utility_functions as util
 import camera_calibration as cc
+import mesh_renderer
 # ======= constants
 pass
 
@@ -48,13 +49,14 @@ def prossesSingleFrame(frame_rgb,frame_gray):
     good_kp_t = np.array([template_kp[m.trainIdx].pt for m in good_match_arr])
     H, masked = cv2.findHomography(good_kp_t, good_kp_f, cv2.RANSAC, 5.0)
 
-    ##TODO:
-    ## understand this shit
-    inline_homography_masked = np.array(masked.ravel() > 0) 
-    ##good_homography_mask = (np.array(masked).flatten() > 0)
-    #best_kp_template = np.array(good_kp_template)[good_homography_mask, :]
-    #best_kp_frame = np.array(good_kp_frame.reshape(good_kp_frame.shape[0], 2))[good_homography_mask, :]
-#
+    #masking only the inline homography
+    inside_homography_masked = np.array(masked.ravel() > 0)
+    inside_kp_f = np.array(good_kp_f)[inside_homography_masked,:]
+    inside_kp_t = np.array(good_kp_t)[inside_homography_masked,:]
+
+    rescale_kp_t = np.array([[x * book_size(1) / t_gray.shape[1] , y * book_size(0) / t_gray.shape[0]] for x,y in inside_kp_t])
+    res,rvec,tvec  =cv2.solvePnP(rescale_kp_t,inside_kp_f,inside_kp_t,camera_matrix,dist_coeffs)
+#   
     ## ========= solve PnP to get cam pose (r_vec and t_vec)
     ## `cv2.solvePnP` is a function that receives:
     ## - xyz of the template in centimeter in camera world (x,3)
