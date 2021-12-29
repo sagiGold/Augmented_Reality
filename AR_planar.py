@@ -44,13 +44,13 @@ def prossesSingleFrame(frame_rgb,frame_gray):
     good_match_arr = np.asarray(good_and_second_good_match_list)[:,0]
     #%%
     #finds the homogriphic matrix
-    good_kp_l = np.array([frame_kp[m.queryIdx].pt for m in good_match_arr])
-    good_kp_r = np.array([template_kp[m.trainIdx].pt for m in good_match_arr])
-    H, masked = cv2.findHomography(good_kp_r, good_kp_l, cv2.RANSAC, 5.0)
+    good_kp_f = np.array([frame_kp[m.queryIdx].pt for m in good_match_arr])
+    good_kp_t = np.array([template_kp[m.trainIdx].pt for m in good_match_arr])
+    H, masked = cv2.findHomography(good_kp_t, good_kp_f, cv2.RANSAC, 5.0)
 
     ##TODO:
     ## understand this shit
-
+    inline_homography_masked = np.array(masked.ravel() > 0) 
     ##good_homography_mask = (np.array(masked).flatten() > 0)
     #best_kp_template = np.array(good_kp_template)[good_homography_mask, :]
     #best_kp_frame = np.array(good_kp_frame.reshape(good_kp_frame.shape[0], 2))[good_homography_mask, :]
