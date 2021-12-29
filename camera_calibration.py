@@ -42,8 +42,8 @@ def calibrateCamera(square_size, pattern_size, img_mask):
 
         if i < 12:
             img_w_corners = cv2.drawChessboardCorners(imgRGB, pattern_size, corners, found)
-            plt.subplot(4, 3, i + 1)
-            plt.imshow(img_w_corners)
+            # plt.subplot(4, 3, i + 1)
+            # plt.imshow(img_w_corners)
 
         print(f"{fn}... OK")
         img_points.append(corners.reshape(-1, 2))

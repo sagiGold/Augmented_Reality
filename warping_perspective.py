@@ -97,6 +97,6 @@ def runVideo():
 
 # runVideo();
 
-frame_rgb,frame_gray = util.import_frame('frame199.jpg')
+# frame_rgb,frame_gray = util.import_frame('frame199.jpg')
 
-util.show_image(prossesSingleFrame(frame_rgb,frame_gray),(10,10))
+# util.show_image(prossesSingleFrame(frame_rgb,frame_gray),(10,10))
