@@ -32,8 +32,7 @@ class MeshRenderer:
 
         # add temp cam
         self.camera = pyrender.IntrinsicsCamera(
-            self.K[0, 0], self.K[1, 1], self.K[0, 2], self.K[1, 2], zfar=10000, name="cam"
-        )
+            self.K[0, 0], self.K[1, 1], self.K[0, 2], self.K[1, 2], zfar=10000, name="cam")g
         light_pose = np.array(
             [
                 [1.0, 0, 0, 0.0],
