@@ -59,7 +59,7 @@ def runVideo(video_name,output_name,porcessing_function):
     length = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
     success,frame = vidcap.read()
     h,w,d = frame.shape
-    out = cv2.VideoWriter(output_name,cv2.VideoWriter_fourcc('M','J','P','G'),30,(w,h))
+    out = cv2.VideoWriter(output_name,cv2.VideoWriter_fourcc(*"XVID"),np.round(vidcap.get(cv2.CAP_PROP_FPS)),(w,h))
 
     cntr=0
     frame_list=[]

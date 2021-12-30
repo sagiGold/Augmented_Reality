@@ -63,6 +63,5 @@ def processSingleFrame(frame_rgb,frame_gray):
 
 # util.runVideo('IMG_8283.MOV','AR_Planar.avi',processSingleFrame)
 
-rgb,gray = util.import_frame('frame1.jpg')
-util.show_image(processSingleFrame(rgb,gray),(10,10))
+
 
