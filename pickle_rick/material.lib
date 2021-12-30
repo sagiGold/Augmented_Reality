@@ -1,0 +1,95 @@
+# Aspose.3D Wavefront OBJ Exporter
+# Copyright 2004-2021 Aspose Pty Ltd.
+# File created: 12/29/2021 15:23:03
+
+newmtl pickle1
+	Ka 0 0 0
+	Kd 1 1 1
+	d 1
+	Tr 0
+	illum 2
+	map_Kd pickle texture.png
+newmtl lambert1
+	Ka 0 0 0
+	Kd 0.5 0.5 0.5
+	d 1
+	Tr 0
+	illum 2
+newmtl wood
+	Ka 0 0 0
+	Kd 0.3540000021457672 0.16088154911994934 0.07504800707101822
+	d 1
+	Tr 0
+	illum 2
+newmtl flesh
+	Ka 0 0 0
+	Kd 0.76700001955032352 0.25837674736976624 0.24083802103996276
+	d 1
+	Tr 0
+	illum 2
+newmtl rat
+	Ka 0 0 0
+	Kd 0.2142857164144516 0.2142857164144516 0.2142857164144516
+	d 1
+	Tr 0
+	illum 2
+newmtl dark_grey
+	Ka 0 0 0
+	Kd 0.08441558480262756 0.08441558480262756 0.08441558480262756
+	d 1
+	Tr 0
+	illum 2
+newmtl bone
+	Ka 0 0 0
+	Kd 0.95700001716613776 0.95700001716613776 0.712007999420166
+	d 1
+	Tr 0
+	illum 2
+newmtl dark_flesh
+	Ka 0 0 0
+	Kd 0.21799999475479124 0.04185599461197853 0.04185599461197853
+	d 1
+	Tr 0
+	illum 2
+newmtl hair
+	Ka 0 0 0
+	Kd 0.54613626003265384 0.66616272926330568 0.68181818723678592
+	d 1
+	Tr 0
+	illum 2
+newmtl dark_broen_belt
+	Ka 0 0 0
+	Kd 0.10000000149011612 0.0470924973487854 0.02760000340640545
+	d 1
+	Tr 0
+	illum 2
+newmtl dark_green
+	Ka 0 0 0
+	Kd 0.10299630463123322 0.16099999845027924 0.07228899747133255
+	d 1
+	Tr 0
+	illum 2
+newmtl lambert21
+	Ka 0 0 0
+	Kd 0.50400000810623168 0.2513418197631836 0.15825600922107696
+	d 1
+	Tr 0
+	illum 2
+newmtl gold
+	Ka 0 0 0
+	Kd 0.57599997520446776 0.51751238107681272 0.1958399713039398
+	d 1
+	Tr 0
+	illum 2
+newmtl black
+	Ka 0 0 0
+	Kd 0 0 0
+	d 1
+	Tr 0
+	illum 2
+newmtl geel
+	Ka 0 0 0
+	Kd 1 0.69231671094894408 0
+	d 1
+	Tr 0
+	illum 2

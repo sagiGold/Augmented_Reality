@@ -1,27 +1,17 @@
 import utility_functions as util
 import cv2
 import glob
+import AR_planar
+import warping_perspective
 
-# util.convertVideo2Frames('Chess_Board_video.MOV',r'C:\Users\idano\Documents\HomeWork\3rd semester\computer vision\Augmented Reality\Augmented_Reality\chess_board_frames')
+def main():
+    util.runVideo('IMG_8283.MOV','AR_Planar.avi',AR_planar.processSingleFrame)
+    util.runVideo('IMG_8283.MOV','AR_Planar.avi',warping_perspective.processSingleFrame)
 
-# im,gray = util.import_frame('Pickle_Rick.jpg')
-# util.show_image(im,(10,10))
-
-# row, col = im.shape[:2]
-# im = im[50:row-50,50:col-50]
-# bottom = im[row-2:row, 0:col]
-# mean = cv2.mean(bottom)[0]
-
-# bordersize = 50
-# im = cv2.copyMakeBorder(
-#     im,
-#     top=bordersize,
-#     bottom=bordersize,
-#     left=bordersize,
-#     right=bordersize,
-#     borderType=cv2.BORDER_CONSTANT,
-#     value=(0, 172, 70)
-# )
-# util.show_image(im,(10,10))
-
-# cv2.imwrite('PICKLE_RICK',im)
+    # rgb,gray = util.import_frame('frame1.jpg')
+    # util.show_image(arp.processSingleFrame(rgb,gray),(10,10))
+    
+if __name__ == "__main__":
+    main()
+    cv2.waitKey(0)
+    print("finished")

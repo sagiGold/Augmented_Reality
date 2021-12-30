@@ -52,3 +52,25 @@ def plotParameterSpace(lines):
     plt.xlabel('rho')
     plt.ylabel('theta')
     plt.show()
+
+
+def runVideo(video_name,output_name,porcessing_function):
+    vidcap = cv2.VideoCapture(video_name)
+    length = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
+    success,frame = vidcap.read()
+    h,w,d = frame.shape
+    out = cv2.VideoWriter(output_name,cv2.VideoWriter_fourcc('M','J','P','G'),30,(w,h))
+
+    cntr=0
+    frame_list=[]
+    while success:
+        frame_src = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame_gray = cv2.cvtColor(frame_src, cv2.COLOR_BGR2GRAY)
+        finished_frame  =porcessing_function(frame_src,frame_gray)
+        # cv2.imwrite(path+"\\frame%d.jpg" %t_cntr,finished_frame)
+        finished_frame = cv2.cvtColor(finished_frame,cv2.COLOR_RGB2BGR)
+        out.write(finished_frame)
+        # frame_list.append(fpl.frame_find_lanes(frame_gray,frame,mask,cropped_mask))
+        success,frame = vidcap.read()
+        print('progress:', "{:.3f}".format((cntr/(length-1))*100),'%',end='\r')
+        cntr+=1
