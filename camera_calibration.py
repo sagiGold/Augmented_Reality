@@ -8,7 +8,7 @@ import warping_perspective as wpp
 
 #%%
     
-# figsize = (20, 20)
+figsize = (20, 20)
 def calibrateCamera(square_size, pattern_size, img_mask):
 
     img_names = glob(img_mask)
@@ -42,7 +42,7 @@ def calibrateCamera(square_size, pattern_size, img_mask):
 
         if i < 12:
             img_w_corners = cv2.drawChessboardCorners(imgRGB, pattern_size, corners, found)
-            # plt.subplot(4, 3, i + 1)
+            # plt.subplot(3, 3, i + 1)
             # plt.imshow(img_w_corners)
 
         print(f"{fn}... OK")
@@ -51,6 +51,21 @@ def calibrateCamera(square_size, pattern_size, img_mask):
 
     # plt.show()
     rms, camera_matrix, dist_coefs, _rvecs, _tvecs = cv2.calibrateCamera(obj_points, img_points, (w, h), None, None)
+
+    #undistort for testing
+    # plt.figure(figsize=figsize)
+    # for i, fn in enumerate(img_names):
+
+    #     imgBGR = cv2.imread(fn)
+    #     imgRGB = cv2.cvtColor(imgBGR, cv2.COLOR_BGR2RGB)
+
+    #     dst = cv2.undistort(imgRGB, camera_matrix, dist_coefs)
+
+    #     if i < 12:
+    #         plt.subplot(4, 3, i + 1)
+    #         plt.imshow(dst)
+
+    # plt.show()
     return camera_matrix, dist_coefs
 
 # %%

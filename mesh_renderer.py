@@ -18,26 +18,28 @@ class MeshRenderer:
         T[0:3, 0:3] = 10 * np.eye(3) * (1 / np.max(mesh.bounds))
         mesh.apply_transform(T)
 
-        # rotate to make the drill standup
+        # rotate to make rick to standup
         T = np.eye(4)
         T[0:3, 0:3] = self.rot_x(np.pi / 2)
         mesh.apply_transform(T)
 
-       # translation matrix to position pickle rick
+        # translation matrix to position pickle rick
         T = np.eye(4)
         T[0:3,3] = np.array([-6,9,0]) #nice
         mesh.apply_transform(T)
 
-        # rotate 180 around x because the Z dir of the reference grid is down
+        # scaling rick
         a =1.5
         T = np.eye(4)
         T[0:3, 0:3] = np.array([[a,0,0],[0,a,0],[0,0,a]])
         mesh.apply_transform(T)
 
+        # rotate 180 around y because the Z dir of the reference grid is down
         T = np.eye(4)
         T[0:3, 0:3] = self.rot_y(np.pi)
         mesh.apply_transform(T)
 
+        # rotate 180 around x because the Z dir of the reference grid is down
         T = np.eye(4)
         T[0:3, 0:3] = self.rot_x(np.pi)
         mesh.apply_transform(T)
